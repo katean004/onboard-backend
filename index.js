@@ -5,14 +5,14 @@ const express = require("express");
 const User = require("./models/User");
 const app = express();
 
-// for running both frontend and backend on same pc
-app.use(function (req, res, next) {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  res.setHeader("Access-Control-Allow-Credentials", true);
-  next();
-});
+// for running backend on same pc as frontend
+// app.use(function (req, res, next) {
+//   res.setHeader("Access-Control-Allow-Origin", "*");
+//   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+//   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+//   res.setHeader("Access-Control-Allow-Credentials", true);
+//   next();
+// });
 
 const dbUrl = process.env.DB_URL || "mongodb://localhost:27017/users";
 
