@@ -5,7 +5,7 @@ const express = require("express");
 const User = require("./models/User");
 const app = express();
 
-// for running backend on same pc as frontend
+// for running backend on same pc as frontend without hosting
 // app.use(function (req, res, next) {
 //   res.setHeader("Access-Control-Allow-Origin", "*");
 //   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
@@ -26,6 +26,27 @@ db.once("open", () => {
 
 app.get("/", (req, res) => {
   res.send("HOME");
+});
+
+app.post("/users", async (req, res) => {
+  const user = new User({
+    id: 5,
+    profile: {
+      id: 5,
+      linkedin_url: "https://www.linkedin.com/company/onboardio/",
+      twitter_url: "https://www.twitter.com/onboardio/",
+      instagram_url: "https://www.instagram.com/onboardio/",
+      website_url: "https://onboard.io",
+      bio: "This is my tagline.",
+      job_title: "Title"
+    },
+    avatar: "https://assets.onboard.io/assets/a/5/5/fswnuakkcn.jpg",
+    first_name: "John",
+    last_name: "Smith",
+    name: "John Smith",
+    created_at: "2020-10-01T19:40:40Z"
+  });
+  await user.save();
 });
 
 app.get("/users/:id", async (req, res) => {
