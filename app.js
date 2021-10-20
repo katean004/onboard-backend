@@ -2,6 +2,7 @@ require("dotenv").config();
 
 const mongoose = require("mongoose");
 const express = require("express");
+const path = require("path");
 const User = require("./models/User");
 const app = express();
 
@@ -14,7 +15,8 @@ const app = express();
 //   next();
 // });
 
-const dbUrl = process.env.DB_URL || "mongodb://localhost:27017/users";
+// const dbUrl = process.env.DB_URL || "mongodb://localhost:27017/users";
+const dbUrl = "mongodb://localhost:27017/users";
 
 mongoose.connect(dbUrl);
 
@@ -24,8 +26,16 @@ db.once("open", () => {
   console.log("Database connected");
 });
 
-app.get("/", (req, res) => {
-  res.send("HOME");
+// template engine
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
+
+app.get("/home", (req, res) => {
+  res.render("home");
+});
+
+app.get("/users", (req, res) => {
+  res.render("users");
 });
 
 app.post("/users", async (req, res) => {
@@ -47,6 +57,7 @@ app.post("/users", async (req, res) => {
     created_at: "2020-10-01T19:40:40Z"
   });
   await user.save();
+  res.redirect("home");
 });
 
 app.get("/users/:id", async (req, res) => {
